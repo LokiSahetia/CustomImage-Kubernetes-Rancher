@@ -8,7 +8,7 @@ with open("/vault/secrets/mysql", "r") as f:
 
 def get_connection():
     return mysql.connector.connect(
-        host="mysql-0.mysql-headless",
+        host="mysql-0.mysql.default.svc.cluster.local",
         user="root",
         password=MYSQL_PASSWORD,
         database="demo"
