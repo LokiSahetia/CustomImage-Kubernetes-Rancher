@@ -19,7 +19,7 @@ def home():
     conn = get_connection()
     cursor = conn.cursor()
 
-    cursor.execute("QUERY here")
+    cursor.execute("SELECT * FROM users")
 
     rows = cursor.fetchall()
 
