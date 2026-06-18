@@ -28,7 +28,7 @@ def home():
 
     result = [row[0] for row in rows]
 
-    return f"Users: {', '.join(result)}"
+    return f"DATABASE Users: {', '.join(result)}"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
