@@ -1,12 +1,34 @@
-# app.py
 from flask import Flask
+import mysql.connector
 
 app = Flask(__name__)
 
+with open("/vault/secrets/mysql", "r") as f:
+    MYSQL_PASSWORD = f.read().strip()
+
+def get_connection():
+    return mysql.connector.connect(
+        host="mysql-0.mysql-headless",
+        user="root",
+        password=MYSQL_PASSWORD,
+        database="demo"
+    )
+
 @app.route('/')
 def home():
-    return "GOOOD EVENING LOKI"
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT name FROM users")
+
+    rows = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    result = [row[0] for row in rows]
+
+    return f"Users in DB: {', '.join(result)}"
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
-
